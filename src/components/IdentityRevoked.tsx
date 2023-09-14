@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import canceledIcon from '../assets/canceled.svg';
 
 const IdentityRevoked = () => {
@@ -17,7 +17,7 @@ const IdentityRevoked = () => {
           mb: "16px"
         }}
         >
-        <img src={canceledIcon} alt="canceled-icon" style={{ width: "150px" }} />
+        <img src={canceledIcon} alt="canceled-icon" style={{ width: "100px" }} />
       </Grid>
 
       <Grid
@@ -31,6 +31,21 @@ const IdentityRevoked = () => {
         >
           Regrettably, the identity has been revoked.
         </Typography>
+      </Grid>
+
+      <Grid
+        item
+      >
+        <Button 
+          variant="contained"
+          color="primary"
+          sx={{
+            height: "40px",
+            width: "200px"
+          }}
+        >
+          reach out
+        </Button>
       </Grid>
     </Grid>
   );

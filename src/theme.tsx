@@ -33,10 +33,10 @@ const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "#root":{
+        "#root": {
           width: "300px",
           height: "400px",
-          boxShadow: "0 0 1px 1px #f91880",
+          boxShadow: "inset 0 0 1px 1px #f91880",
           padding: "8px"
         }
       },

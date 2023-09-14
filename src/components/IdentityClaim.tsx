@@ -1,15 +1,16 @@
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
-import { ActiveProfile } from "../chrome/utils";
-import xLogoWhite from '../assets/x-logo-white.svg';
+import { Avatar, Box, Button, Grid, Typography } from "@mui/material"
+import { ActiveProfile } from "../chrome/utils"
+import xLogoWhite from '../assets/x-logo-white.svg'
 
 export interface Identity {
-  name?: string
-	revoke?: boolean
+  name?: string;
+  links?: Record<string, string>;
+  revoke?: boolean;
 }
 
 interface IdentityClaimProps {
-  activeProfile: ActiveProfile;
-  onClaimIdentity: () => void;
+  activeProfile: ActiveProfile
+  onClaimIdentity: () => void
 }
 
 const IdentityClaim = ({ activeProfile, onClaimIdentity }: IdentityClaimProps) => {
@@ -93,7 +94,7 @@ const IdentityClaim = ({ activeProfile, onClaimIdentity }: IdentityClaimProps) =
         </Button>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default IdentityClaim;
+export default IdentityClaim

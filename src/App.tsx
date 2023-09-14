@@ -62,7 +62,7 @@ export default function App() {
                     onClaimIdentity={onClaimIdentity}
                   />
               : !identity.revoke 
-                ? <IdentityVerified />
+                ? <IdentityVerified identity={identity} />
                 : <IdentityRevoked />
           }
         </>

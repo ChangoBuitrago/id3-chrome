@@ -36,7 +36,7 @@ const theme = createTheme({
         "#root":{
           width: "300px",
           height: "400px",
-          boxShadow: "inset 0 0 2px 2px #2f3336",
+          boxShadow: "0 0 1px 1px #f91880",
           padding: "8px"
         }
       },

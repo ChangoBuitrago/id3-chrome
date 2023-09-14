@@ -1,41 +1,42 @@
 import { Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { ActiveProfile, getActiveProfile, isValidProfile } from './chrome/utils'
+import { ActiveProfile, getTwitterProfile } from './chrome/utils'
 import Header from './components/Header'
+import IdentityClaim, { Identity } from './components/IdentityClaim'
 import IdentityRevoked from './components/IdentityRevoked'
-import IdentitySubmit, { Identity } from './components/IdentitySubmit'
 import IdentityVerified from './components/IdentityVerified'
 import Loader from './components/Loader'
-import IdentityNotFound from './components/IdentityNotFound'
+import ProfileNotFound from './components/ProfileNotFound'
+import identities from './data/identites.json'
+
+const verifyIdentity = (activeProfile: ActiveProfile):Identity => {
+  return identities.find(({name}) => activeProfile.name === name) as Identity;
+}
 
 export default function App() {
-  const [activeProfile, setActiveProfile] = useState<ActiveProfile>({})
-  const [identity, setIdentity] = useState<Identity>({})
+  const [activeProfile, setActiveProfile] = useState<ActiveProfile | undefined>()
+  const [identity, setIdentity] = useState<Identity | undefined>()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (!activeProfile.w3n) {
+    if (!activeProfile) {
       setLoading(true)
 
-      isValidProfile((isValid:boolean) => {
-        if (isValid) {
-          getActiveProfile((activeProfile:ActiveProfile) => {
-            if (activeProfile.w3n) {
-              setActiveProfile(activeProfile)
-            }
-          })
-        }
+      getTwitterProfile((activeProfile: ActiveProfile | undefined) => {
+        setActiveProfile(activeProfile)
       })
-    } 
-
+    } else {
+      setIdentity(verifyIdentity(activeProfile))
+    }
+    
     setTimeout(() => { setLoading(false) }, 2000)
   }, [activeProfile]);
   
-  const onVerifyIdentity = () => {
+  const onClaimIdentity = () => {
     setLoading(true)
 
-    setIdentity({ name: "Micha Roon", revoke: activeProfile.w3n === "buitrago" })
-
+    // ...
+    
     setTimeout(() => { setLoading(false) }, 2000)
   }
 
@@ -53,18 +54,17 @@ export default function App() {
       !loading ? (
         <>
           <Header />
-          {!activeProfile.w3n ? (
-            <IdentityNotFound />
-          ) : !identity.name ? (
-            <IdentitySubmit 
-              activeProfile={activeProfile} 
-              onVerifyIdentity={onVerifyIdentity}
-            />
-          ) : !identity.revoke ? (
-            <IdentityVerified />
-          ) : (
-            <IdentityRevoked />
-          )}
+          { !identity
+              ? !activeProfile
+                ? <ProfileNotFound />
+                : <IdentityClaim 
+                    activeProfile={activeProfile} 
+                    onClaimIdentity={onClaimIdentity}
+                  />
+              : !identity.revoke 
+                ? <IdentityVerified />
+                : <IdentityRevoked />
+          }
         </>
       ) : (
         <Loader />

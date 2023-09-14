@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import lostIcon from '../assets/lost.svg';
 
-const IdentityNotFound = () => {
+const ProfileNotFound = () => {
   return (
     <Grid
       item container
@@ -29,11 +29,11 @@ const IdentityNotFound = () => {
         <Typography
           variant="subtitle1"
         >
-          We haven't been able to find an Identity to verify.
+          We haven't been able to find a Profile to verify.
         </Typography>
       </Grid>
     </Grid>
   );
 };
 
-export default IdentityNotFound;
+export default ProfileNotFound;

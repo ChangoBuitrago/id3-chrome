@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Micha Roon",
+    "w3n": "drgrob",
+    "revoke": false
+  },
+  {
+    "name": "Pablo Buitrago",
+    "w3n": "buitrago",
+    "revoke": true
+  }
+]

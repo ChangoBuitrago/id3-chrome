@@ -7,12 +7,12 @@ export interface Identity {
 	revoke?: boolean
 }
 
-interface IdentitySubmitProps {
+interface IdentityClaimProps {
   activeProfile: ActiveProfile;
-  onVerifyIdentity: () => void;
+  onClaimIdentity: () => void;
 }
 
-const IdentitySubmit = ({ activeProfile, onVerifyIdentity }: IdentitySubmitProps) => {
+const IdentityClaim = ({ activeProfile, onClaimIdentity }: IdentityClaimProps) => {
   return (
     <Grid
       item container
@@ -74,16 +74,6 @@ const IdentitySubmit = ({ activeProfile, onVerifyIdentity }: IdentitySubmitProps
           >
             @{activeProfile.username}
           </Typography>
-
-          <Typography
-            variant="subtitle1"
-            color="primary"
-            sx={{
-              fontWeight: "500"
-            }}
-          >
-            w3n:{activeProfile.w3n}
-          </Typography>
         </Box>
       </Grid>
 
@@ -93,17 +83,17 @@ const IdentitySubmit = ({ activeProfile, onVerifyIdentity }: IdentitySubmitProps
         <Button 
           variant="contained"
           color="primary"
-          onClick={onVerifyIdentity}
+          onClick={onClaimIdentity}
           sx={{
             height: "40px",
             width: "200px"
           }}
         >
-          verify identity
+          claim identity
         </Button>
       </Grid>
     </Grid>
   );
 };
 
-export default IdentitySubmit;
+export default IdentityClaim;

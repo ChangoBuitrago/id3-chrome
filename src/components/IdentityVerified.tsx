@@ -31,6 +31,16 @@ const IdentityVerified = () => {
         >
           Identity has been successfully verified.
         </Typography>
+
+        {/* <Typography
+            variant="subtitle1"
+            color="primary"
+            sx={{
+              fontWeight: "500"
+            }}
+          >
+          w3n:{activeProfile.w3n}
+        </Typography> */}
       </Grid>
     </Grid>
   );

@@ -5,7 +5,7 @@ export interface ActiveProfile {
 	avatar?: string
 } 
 
-export const getTwitterProfile = (callback: (activeProfile: ActiveProfile | undefined) => void): void => {
+export const getTwitterProfile = (callback: (activeProfile: ActiveProfile | null) => void): void => {
 	const queryInfo = { active: true, lastFocusedWindow: true }
 
 	chrome.tabs.query(queryInfo, (tabs) => {
@@ -14,7 +14,7 @@ export const getTwitterProfile = (callback: (activeProfile: ActiveProfile | unde
 
 			const isTwitter = /^https:\/\/twitter\.com\//i.test(url)
 			if (!isTwitter) {
-				callback(undefined)
+				callback(null)
 				return
 			}
 
@@ -29,12 +29,12 @@ export const getTwitterProfile = (callback: (activeProfile: ActiveProfile | unde
 							const w3nMatch = textContent.match(/\(w3n:([^)]+)\)/)
 							const usernameMatch = textContent.match(/@([^ ]+)/)
 							
-							const name = nameMatch ? nameMatch[1].trim() : undefined
-							const w3n = w3nMatch ? w3nMatch[1] : undefined
-							const username = usernameMatch ? usernameMatch[1] : undefined
+							const name = nameMatch ? nameMatch[1].trim() : null
+							const w3n = w3nMatch ? w3nMatch[1] : null
+							const username = usernameMatch ? usernameMatch[1] : null
 
 							const avatarElement = document.querySelector(`[data-testid="UserAvatar-Container-${username}"] img`) as HTMLImageElement
-							const avatar = avatarElement?.src || undefined
+							const avatar = avatarElement?.src || null
 
 							return { name, w3n, username, avatar }
 					}

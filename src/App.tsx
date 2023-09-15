@@ -14,15 +14,15 @@ const verifyIdentity = (activeProfile: ActiveProfile):Identity => {
 }
 
 export default function App() {
-  const [activeProfile, setActiveProfile] = useState<ActiveProfile | undefined>()
-  const [identity, setIdentity] = useState<Identity | undefined>()
+  const [activeProfile, setActiveProfile] = useState<ActiveProfile | null>()
+  const [identity, setIdentity] = useState<Identity | null>()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!activeProfile) {
       setLoading(true)
 
-      getTwitterProfile((activeProfile: ActiveProfile | undefined) => {
+      getTwitterProfile((activeProfile: ActiveProfile | null) => {
         setActiveProfile(activeProfile)
       })
     } else {

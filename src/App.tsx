@@ -21,6 +21,8 @@ export default function App() {
   useEffect(() => {
     if (!activeProfile) {
       setLoading(true)
+      
+      //ToDo: wait for DOM to complete loading.
 
       getTwitterProfile((activeProfile: ActiveProfile | null) => {
         setActiveProfile(activeProfile)
@@ -55,7 +57,7 @@ export default function App() {
         <>
           <Header />
           { !identity
-              ? !activeProfile
+              ? !activeProfile?.username
                 ? <ProfileNotFound />
                 : <IdentityClaim 
                     activeProfile={activeProfile} 

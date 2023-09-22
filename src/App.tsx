@@ -1,46 +1,60 @@
 import { Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { ActiveProfile, getTwitterProfile } from './chrome/utils'
+import { TwitterBio, getTwitterBio } from './chrome/utils'
 import Header from './components/Header'
-import IdentityClaim, { Identity } from './components/IdentityClaim'
-import IdentityRevoked from './components/IdentityRevoked'
-import IdentityVerified from './components/IdentityVerified'
 import Loader from './components/Loader'
 import ProfileNotFound from './components/ProfileNotFound'
-import identities from './data/identites.json'
+import ProfileRevoked from './components/ProfileRevoked'
+import ProfileVerified, { Profile } from './components/ProfileVerified'
 
-const verifyIdentity = (activeProfile: ActiveProfile):Identity => {
-  return identities.find(({name}) => activeProfile.name === name) as Identity;
+const getProfile = (twitterBio: TwitterBio | null | undefined): Profile | null => {
+  const w3n: string | undefined = twitterBio?.w3n
+  const username: string | undefined = twitterBio?.username
+
+  let profile: Profile | null = null
+  if (w3n === "micha" && username === "drgorb") {
+    profile = {
+      links: {
+        email: "mailto:micha.roon@managination.com",
+        website: "https://hashgraph-association.com",
+        twitter: "https://twitter.com/drgorb",
+        linkedin: "https://linkedin.com/in/micha",
+        github: "https://github.com/drgorb",
+      },
+      revoke: false,
+    }
+  } else if (username === "buitregool") {
+    profile = {
+      links: {},
+      revoke: true,
+    }
+  }
+
+  return profile
 }
 
 export default function App() {
-  const [activeProfile, setActiveProfile] = useState<ActiveProfile | null>()
-  const [identity, setIdentity] = useState<Identity | null>()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [twitterBio, setTwitterBio] = useState<TwitterBio | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
 
   useEffect(() => {
-    if (!activeProfile) {
-      setLoading(true)
-      
-      //ToDo: wait for DOM to complete loading.
-
-      getTwitterProfile((activeProfile: ActiveProfile | null) => {
-        setActiveProfile(activeProfile)
-      })
-    } else {
-      setIdentity(verifyIdentity(activeProfile))
+    if (twitterBio && !profile) {
+      const fetchedProfile = getProfile(twitterBio);
+      if (fetchedProfile) {
+        setProfile(fetchedProfile);
+      }
+      setLoading(false)
+    } else if (!twitterBio) {
+      getTwitterBio((fetchedBio: TwitterBio | null) => {
+        if (fetchedBio) {
+          setTwitterBio(fetchedBio);
+        } else {
+          setLoading(false)
+        }
+      });
     }
-    
-    setTimeout(() => { setLoading(false) }, 2000)
-  }, [activeProfile]);
-  
-  const onClaimIdentity = () => {
-    setLoading(true)
-
-    // ...
-    
-    setTimeout(() => { setLoading(false) }, 2000)
-  }
+  }, [twitterBio, profile])
 
   return (
     <Grid
@@ -52,26 +66,20 @@ export default function App() {
         width: "100%"
       }}
     >
-    {
-      !loading ? (
-        <>
-          <Header />
-          { !identity
-              ? !activeProfile?.username
-                ? <ProfileNotFound />
-                : <IdentityClaim 
-                    activeProfile={activeProfile} 
-                    onClaimIdentity={onClaimIdentity}
-                  />
-              : !identity.revoke 
-                ? <IdentityVerified identity={identity} />
-                : <IdentityRevoked />
-          }
-        </>
-      ) : (
-        <Loader />
-      )
-    }
+    {!loading ? (
+      <>
+        <Header />
+        {
+          !profile 
+            ? <ProfileNotFound /> 
+            : !profile.revoke 
+              ? <ProfileVerified profile={profile} />
+              : <ProfileRevoked />
+        }
+      </>
+    ) : (
+      <Loader />
+    )}
     </Grid>
   )
 }

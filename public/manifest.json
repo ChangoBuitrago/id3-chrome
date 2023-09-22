@@ -5,8 +5,9 @@
   "version": "1.0",
   "permissions": [
     "activeTab",
-    "storage",
-    "scripting"
+    "scripting",
+    "identity", 
+    "identity.email"
   ],
   "action": {
     "default_popup": "index.html",

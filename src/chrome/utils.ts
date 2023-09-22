@@ -1,11 +1,11 @@
-export interface ActiveProfile {
+export interface TwitterBio {
 	name?: string,
 	w3n?: string,
 	username?: string,
 	avatar?: string
 } 
 
-export const getTwitterProfile = (callback: (activeProfile: ActiveProfile | null) => void): void => {
+export const getTwitterBio = (callback: (twiterBio: TwitterBio | null) => void): void => {
 	const queryInfo = { active: true, lastFocusedWindow: true }
 
 	chrome.tabs.query(queryInfo, (tabs) => {
@@ -29,18 +29,18 @@ export const getTwitterProfile = (callback: (activeProfile: ActiveProfile | null
 							const w3nMatch = textContent.match(/\(w3n:([^)]+)\)/)
 							const usernameMatch = textContent.match(/@([^ ]+)/)
 							
-							const name = nameMatch ? nameMatch[1].trim() : null
-							const w3n = w3nMatch ? w3nMatch[1] : null
-							const username = usernameMatch ? usernameMatch[1] : null
+							const name = nameMatch ? nameMatch[1].trim() : undefined
+							const w3n = w3nMatch ? w3nMatch[1] : undefined
+							const username = usernameMatch ? usernameMatch[1] : undefined
 
 							const avatarElement = document.querySelector(`[data-testid="UserAvatar-Container-${username}"] img`) as HTMLImageElement
-							const avatar = avatarElement?.src || null
+							const avatar = avatarElement?.src || undefined
 
 							return { name, w3n, username, avatar }
 					}
 			}, (results) => {
-					const activeProfile = results[0].result as ActiveProfile
-					callback(activeProfile)
+					const twiterBio = results[0].result as TwitterBio
+					callback(twiterBio)
 			})
 	})
 }

@@ -1,19 +1,19 @@
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material"
-import { ActiveProfile } from "../chrome/utils"
-import xLogoWhite from '../assets/x-logo-white.svg'
+import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
+import xLogoWhite from '../assets/x-logo-white.svg';
+import { TwitterBio } from "../chrome/utils";
 
-export interface Identity {
+export interface Profile {
   name?: string;
   links?: Record<string, string>;
   revoke?: boolean;
 }
 
-interface IdentityClaimProps {
-  activeProfile: ActiveProfile
-  onClaimIdentity: () => void
+interface ProfileClaimProps {
+  twitterBio: TwitterBio
+  onClaimProfile: () => void
 }
 
-const IdentityClaim = ({ activeProfile, onClaimIdentity }: IdentityClaimProps) => {
+const ProfileClaim = ({ twitterBio, onClaimProfile }: ProfileClaimProps) => {
   return (
     <Grid
       item container
@@ -44,8 +44,8 @@ const IdentityClaim = ({ activeProfile, onClaimIdentity }: IdentityClaimProps) =
         }}
       >
         <Avatar
-          alt={activeProfile.username} 
-          src={activeProfile.avatar} 
+          alt={twitterBio.username} 
+          src={twitterBio.avatar} 
           sx={{ 
             width: "72px", 
             height: "72px", 
@@ -63,7 +63,7 @@ const IdentityClaim = ({ activeProfile, onClaimIdentity }: IdentityClaimProps) =
               fontWeight: "800"
             }}
           >
-            {activeProfile.name}
+            {twitterBio.name}
           </Typography>
         
           <Typography
@@ -73,7 +73,7 @@ const IdentityClaim = ({ activeProfile, onClaimIdentity }: IdentityClaimProps) =
               color: "#71767b"
             }}
           >
-            @{activeProfile.username}
+            @{twitterBio.username}
           </Typography>
         </Box>
       </Grid>
@@ -84,17 +84,17 @@ const IdentityClaim = ({ activeProfile, onClaimIdentity }: IdentityClaimProps) =
         <Button 
           variant="contained"
           color="primary"
-          onClick={onClaimIdentity}
+          onClick={onClaimProfile}
           sx={{
             height: "40px",
             width: "200px"
           }}
         >
-          claim identity
+          claim profile
         </Button>
       </Grid>
     </Grid>
   )
 }
 
-export default IdentityClaim
+export default ProfileClaim

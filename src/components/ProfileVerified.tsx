@@ -6,10 +6,14 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import { Button, Typography } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import verifiedIcon from '../assets/verified.svg';
-import { Identity } from './IdentityClaim';
 
-export interface IdentityProps {
-  identity: Identity
+export interface Profile {
+  links: Record<string, string>
+  revoke: boolean
+}
+
+interface ProfileVerifiedProps {
+  profile: Profile
 }
 
 const socialIcons: Record<string, JSX.Element> = {
@@ -18,9 +22,10 @@ const socialIcons: Record<string, JSX.Element> = {
   twitter: <TwitterIcon />,
   linkedin: <LinkedInIcon />,
   github: <GitHubIcon />
+  // ToDo: Add default icon.
 }
 
-const IdentityVerified = ({ identity }: IdentityProps) => {
+const ProfileVerified = ({ profile: { links } }: ProfileVerifiedProps) => {
   return (
     <Grid
       item container
@@ -48,11 +53,11 @@ const IdentityVerified = ({ identity }: IdentityProps) => {
         <Typography
           variant="subtitle1"
         >
-          Identity has been successfully verified.
+          Profile has been successfully verified.
         </Typography>
       </Grid>
 
-      { identity.links && 
+      { links && 
         <Grid
           item container
           justifyContent="space-evenly"
@@ -61,14 +66,14 @@ const IdentityVerified = ({ identity }: IdentityProps) => {
             m: "16px"
           }}
         >
-          { Object.keys(identity.links).map((platform) => (
+          { Object.keys(links).map((platformName) => (
             <Grid
               item
-              key={platform}
+              key={platformName}
             >
               <Button 
                 component="a" 
-                href={identity.links?.[platform]} 
+                href={links[platformName]} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 variant="text"
@@ -76,7 +81,7 @@ const IdentityVerified = ({ identity }: IdentityProps) => {
                   minWidth: "0px"
                 }}
               >
-                {socialIcons[platform]}
+                { socialIcons[platformName] }
               </Button>
             </Grid>
           ))}
@@ -86,4 +91,4 @@ const IdentityVerified = ({ identity }: IdentityProps) => {
   );
 };
 
-export default IdentityVerified;
+export default ProfileVerified;

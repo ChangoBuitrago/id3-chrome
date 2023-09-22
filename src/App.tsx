@@ -8,11 +8,10 @@ import ProfileRevoked from './components/ProfileRevoked'
 import ProfileVerified, { Profile } from './components/ProfileVerified'
 
 const getProfile = (twitterBio: TwitterBio | null | undefined): Profile | null => {
-  const w3n: string | undefined = twitterBio?.w3n
   const username: string | undefined = twitterBio?.username
 
   let profile: Profile | null = null
-  if (w3n === "micha" && username === "drgorb") {
+  if (username === "drgorb") {
     profile = {
       links: {
         email: "mailto:micha.roon@managination.com",
@@ -23,7 +22,7 @@ const getProfile = (twitterBio: TwitterBio | null | undefined): Profile | null =
       },
       revoke: false,
     }
-  } else if (username === "buitregool") {
+  } else if (username !== "drgorb") {
     profile = {
       links: {},
       revoke: true,

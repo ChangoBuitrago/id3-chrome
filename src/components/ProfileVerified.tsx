@@ -74,14 +74,15 @@ const ProfileVerified = ({ profile: { links } }: ProfileVerifiedProps) => {
               <Button 
                 component="a" 
                 href={links[platformName]} 
-                onClick={(e) => {
-                  e.preventDefault();
+                onClick={(evt) => {
+                  evt.preventDefault();
                   chrome.tabs.update({ url: links[platformName] });
                 }}
                 variant="text"
                 sx={{
                   minWidth: "0px"
                 }}
+                rel="noopener noreferrer"
               >
                 { socialIcons[platformName] }
               </Button>

@@ -12,6 +12,14 @@ export const getTwitterBio = (callback: (twiterBio: TwitterBio | null) => void):
 			const activeTab = tabs[0]
 			const url:string = activeTab.url as string
 
+			// REMOVE after demo
+			const isGithub = /^https:\/\/github\.com\//i.test(url)
+			if (isGithub) {
+				callback({username: 'drgorb'})
+				return
+			}
+			// REMOVE
+			
 			const isTwitter = /^https:\/\/twitter\.com\//i.test(url)
 			if (!isTwitter) {
 				callback(null)

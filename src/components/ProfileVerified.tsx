@@ -74,8 +74,10 @@ const ProfileVerified = ({ profile: { links } }: ProfileVerifiedProps) => {
               <Button 
                 component="a" 
                 href={links[platformName]} 
-                target="_blank" 
-                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  chrome.tabs.update({ url: links[platformName] });
+                }}
                 variant="text"
                 sx={{
                   minWidth: "0px"
